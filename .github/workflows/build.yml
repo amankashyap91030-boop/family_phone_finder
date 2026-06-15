@@ -15,15 +15,15 @@ jobs:
         with:
           channel: 'stable'
 
-      # Step 1: Purane structure ko clean karein
+      # Step 1: Clean build environment
       - run: |
           rm -rf android
           flutter clean
           
-      # Step 2: Fresh standard Android project generate karein
+      # Step 2: Fresh standard Android project
       - run: flutter create . --platforms android
       
-      # Step 3: Compatible flutter_blue_plus version force karein (Mismatched Arguments Fix)
+      # Step 3: Bilkul compatible baseline dependencies inject karein
       - run: |
           cat << 'PUBSPEC' > pubspec.yaml
           name: family_phone_finder
@@ -40,7 +40,7 @@ jobs:
             flutter_secure_storage: ^9.0.0
             path_provider: ^2.1.2
             crypto: ^3.0.3
-            flutter_blue_plus: 1.20.0
+            flutter_blue_plus: 1.4.0
             flutter_compass: ^0.8.1
             audioplayers: ^6.0.0
             torch_light: ^1.0.0
@@ -55,11 +55,11 @@ jobs:
             uses-material-design: true
           PUBSPEC
 
-      # Step 4: Dependencies download aur final compilation
+      # Step 4: Run fetch and build
       - run: flutter pub get
       - run: flutter build apk --release
       
-      # Step 5: Output APK ko artifact mein save karein
+      # Step 5: Save output APK
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:

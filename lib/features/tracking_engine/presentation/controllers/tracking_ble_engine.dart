@@ -30,7 +30,7 @@ class BLETrackerNotifier extends StateNotifier<BLETrackerState> {
       state = state.copyWith(scanResults: results);
     });
 
-    // Modern FlutterBluePlus syntax for standard compatibility
+    // Pure dynamic and safe modern standard scan template
     await FlutterBluePlus.startScan(
       timeout: const Duration(seconds: 15),
     );

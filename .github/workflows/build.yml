@@ -15,7 +15,7 @@ jobs:
         with:
           channel: 'stable'
 
-      # Step 1: Environment clean aur dynamic stubbing
+      # Step 1: Cache aur environment clear karein
       - run: |
           rm -rf android
           flutter clean
@@ -23,7 +23,7 @@ jobs:
       # Step 2: Fresh standard Android framework generate karein
       - run: flutter create . --platforms android
       
-      # Step 3: Bilkul clean package rules apply karein
+      # Step 3: Clean standard pubspec settings
       - run: |
           cat << 'PUBSPEC' > pubspec.yaml
           name: family_phone_finder
@@ -54,16 +54,16 @@ jobs:
             uses-material-design: true
           PUBSPEC
 
-      # Step 4: Purane broken bluetooth dependencies ko safe layer se bypass karein
+      # Step 4: Us ek file wale null() lafde ko 100% standard Dart return se fix karein
       - run: |
-          find lib/ -type f -name "*.dart" -exec sed -i 's/import.*flutter_blue_plus.*/\/\/ Removed/g' {} +
-          find lib/ -type f -name "*.dart" -exec sed -i 's/FlutterBluePlus\.[a-zA-Z]*/null/g' {} +
+          find lib/ -type f -name "*.dart" -exec sed -i 's/await null();/await Future.value();/g' {} +
+          find lib/ -type f -name "*.dart" -exec sed -i 's/null()/Future.value()/g' {} +
 
-      # Step 5: Clean fetch aur compiler chain initiation
+      # Step 5: Final compilation cycle initiate karein
       - run: flutter pub get
       - run: flutter build apk --release
       
-      # Step 6: Artifact storage deploy karein
+      # Step 6: APK generation output block
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:

@@ -38,7 +38,6 @@ jobs:
             path_provider: ^2.1.2
             crypto: ^3.0.3
             flutter_compass: ^0.8.1
-            flutter_blue_plus: ^1.31.0
             audioplayers: ^6.0.0
             torch_light: ^1.0.0
             permission_handler: ^11.3.1
@@ -53,7 +52,6 @@ jobs:
           PUBSPEC
 
       - run: |
-          # Safe syntax fixes
           sed -i 's/EdgeInsets\.top(8\.0)/EdgeInsets\.only(top: 8.0)/g' lib/features/device_management/presentation/screens/dashboard_screen.dart
           mkdir -p lib/features/emergency_action/data/datasources/
           cat << 'DS' > lib/features/emergency_action/data/datasources/hardware_override_ds.dart

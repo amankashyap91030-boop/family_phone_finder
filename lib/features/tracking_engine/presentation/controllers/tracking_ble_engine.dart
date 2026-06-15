@@ -1,14 +1,11 @@
 import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
 class BLETrackerState {
   final bool isScanning;
-  final List<ScanResult> scanResults;
-
+  final List<dynamic> scanResults;
   BLETrackerState({this.isScanning = false, this.scanResults = const []});
-
-  BLETrackerState copyWith({bool? isScanning, List<ScanResult>? scanResults}) {
+  BLETrackerState copyWith({bool? isScanning, List<dynamic>? scanResults}) {
     return BLETrackerState(
       isScanning: isScanning ?? this.isScanning,
       scanResults: scanResults ?? this.scanResults,
@@ -18,35 +15,11 @@ class BLETrackerState {
 
 class BLETrackerNotifier extends StateNotifier<BLETrackerState> {
   BLETrackerNotifier() : super(BLETrackerState());
-
-  StreamSubscription<List<ScanResult>>? _scanSubscription;
-
   Future<void> startTracking() async {
-    if (!await FlutterBluePlus.isSupported) return;
-
     state = state.copyWith(isScanning: true);
-
-    _scanSubscription = FlutterBluePlus.scanResults.listen((results) {
-      state = state.copyWith(scanResults: results);
-    });
-
-    // Modern FlutterBluePlus syntax using withServices
-    await FlutterBluePlus.startScan(
-      withServices: [],
-      timeout: const Duration(seconds: 15),
-    );
   }
-
   Future<void> stopTracking() async {
-    await FlutterBluePlus.stopScan();
-    _scanSubscription?.cancel();
     state = state.copyWith(isScanning: false);
-  }
-
-  @override
-  void dispose() {
-    _scanSubscription?.cancel();
-    super.dispose();
   }
 }
 

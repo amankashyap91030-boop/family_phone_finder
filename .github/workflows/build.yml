@@ -15,18 +15,20 @@ jobs:
         with:
           channel: 'stable'
           
-      # Fresh Android structure generate karein
+      # Purana structure poora saaf karein
       - run: rm -rf android
-      - run: flutter create . --overwrite --platform android
       
-      # Standard Java Class Name ke sath clean Manifest override karein
+      # Strictly Android v2 embedding ke sath fresh structure generate karein
+      - run: flutter create . --overwrite --platform android --org com.family --project-name family_phone_finder
+      
+      # Naye Gradle standards ke mutabik clean Manifest inject karein
       - run: |
           cat << 'MANIFEST' > android/app/src/main/AndroidManifest.xml
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">
               <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
               <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
               <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-              <application android:label="Family Phone Finder" android:name="io.flutter.app.FlutterApplication" android:icon="@mipmap/ic_launcher">
+              <application android:label="Family Phone Finder" android:icon="@mipmap/ic_launcher">
                   <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
                       <meta-data android:name="io.flutter.embedding.android.NormalTheme" android:resource="@style/NormalTheme" />
                       <intent-filter>
@@ -34,7 +36,6 @@ jobs:
                           <category android:name="android.intent.category.LAUNCHER"/>
                       </intent-filter>
                   </activity>
-                  <meta-data android:name="flutterEmbedding" android:value="2" />
               </application>
           </manifest>
           MANIFEST

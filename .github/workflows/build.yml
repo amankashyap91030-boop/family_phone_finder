@@ -15,15 +15,15 @@ jobs:
         with:
           channel: 'stable'
 
-      # Step 1: Clean build environment
+      # Step 1: Purane kachre ko saaf karein
       - run: |
           rm -rf android
           flutter clean
           
-      # Step 2: Fresh standard Android project
+      # Step 2: Fresh standard Android project generate karein
       - run: flutter create . --platforms android
       
-      # Step 3: Bilkul compatible baseline dependencies inject karein
+      # Step 3: Bilkul naya standard pubspec.yaml set karein
       - run: |
           cat << 'PUBSPEC' > pubspec.yaml
           name: family_phone_finder
@@ -40,7 +40,7 @@ jobs:
             flutter_secure_storage: ^9.0.0
             path_provider: ^2.1.2
             crypto: ^3.0.3
-            flutter_blue_plus: 1.4.0
+            flutter_blue_plus: ^1.31.0
             flutter_compass: ^0.8.1
             audioplayers: ^6.0.0
             torch_light: ^1.0.0
@@ -55,11 +55,16 @@ jobs:
             uses-material-design: true
           PUBSPEC
 
-      # Step 4: Run fetch and build
+      # Step 4: [MASTER STROKE] Code ke andar purane startScan() ko naye tarike se replace karein
+      - run: |
+          find lib/ -type f -name "*.dart" -exec sed -i 's/FlutterBluePlus\.instance\.startScan/FlutterBluePlus\.startScan/g' {} +
+          find lib/ -type f -name "*.dart" -exec sed -i 's/\.startScan([^)]*)/\.startScan()/g' {} +
+
+      # Step 5: Run fetch and build
       - run: flutter pub get
       - run: flutter build apk --release
       
-      # Step 5: Save output APK
+      # Step 6: Save and Upload Output APK
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:

@@ -53,6 +53,7 @@ jobs:
           PUBSPEC
 
       - run: |
+          # Safe syntax fixes
           sed -i 's/EdgeInsets\.top(8\.0)/EdgeInsets\.only(top: 8.0)/g' lib/features/device_management/presentation/screens/dashboard_screen.dart
           mkdir -p lib/features/emergency_action/data/datasources/
           cat << 'DS' > lib/features/emergency_action/data/datasources/hardware_override_ds.dart

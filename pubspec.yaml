@@ -1,0 +1,40 @@
+name: family_phone_finder
+description: A professional, high-performance Flutter application to locate family devices inside the house using BLE, Sensor Fusion, and Native Overrides.
+version: 1.0.0+1
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+  
+  # State Management & DI
+  flutter_riverpod: ^2.5.1
+  
+  # Offline Storage & Encryption
+  hive: ^2.2.3
+  hive_flutter: ^1.1.0
+  flutter_secure_storage: ^9.0.0
+  path_provider: ^2.1.2
+  crypto: ^3.0.3
+
+  # Hardware Streams & Hardware Manipulation
+  flutter_blue_plus: ^1.31.0
+  flutter_compass: ^0.4.8
+  audioplayers: ^6.0.0
+  torch_light: ^1.0.0
+  permission_handler: ^11.3.1
+
+  # UI Design Enhancements
+  cupertino_icons: ^1.0.6
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+  hive_generator: ^2.0.1
+  build_runner: ^2.4.8
+
+flutter:
+  uses-material-design: true
+  

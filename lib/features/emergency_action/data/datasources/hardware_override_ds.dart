@@ -1,3 +1,1 @@
-class HardwareOverrideEngine {
-  void triggerOverride() {}
-}
+class HardwareOverrideEngine {}

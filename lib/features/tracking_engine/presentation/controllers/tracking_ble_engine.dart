@@ -2,14 +2,13 @@ import 'dart:async';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_blue_plus/flutter_blue_plus.dart';
 
-// Screen ko zone estimation ke liye enum chahiye
 enum ZoneRange { unknown, far, near, immediate }
 
 class BLETrackerState {
   final bool isScanning;
   final List<ScanResult> scanResults;
-  final ZoneRange range;          // Required by radar_scanner_screen.dart
-  final int smoothedRssi;         // Required by sensor_fusion_provider.dart
+  final ZoneRange range;
+  final int smoothedRssi;
 
   BLETrackerState({
     this.isScanning = false,
@@ -38,7 +37,6 @@ class BLETrackerNotifier extends StateNotifier<BLETrackerState> {
 
   StreamSubscription<List<ScanResult>>? _scanSubscription;
 
-  // Required by radar_scanner_screen.dart line 31
   Future<void> startTargetTracking(String macAddress) async {
     if (!await FlutterBluePlus.isSupported) return;
 
@@ -56,7 +54,6 @@ class BLETrackerNotifier extends StateNotifier<BLETrackerState> {
         }
       }
 
-      // Zone calculate karein screen ke liye
       ZoneRange estimatedRange = ZoneRange.unknown;
       if (found) {
         if (targetRssi > -60) {

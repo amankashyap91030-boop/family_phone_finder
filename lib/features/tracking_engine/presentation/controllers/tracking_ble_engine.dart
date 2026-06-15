@@ -61,7 +61,7 @@ class BLETrackerNotifier extends StateNotifier<BLETrackerState> {
     });
 
     state = state.copyWith(isScanning: true);
-    await FlutterBluePlus.startScan(continuous: true, androidUsesFineLocation: true);
+    await FlutterBluePlus.startScan(withServices: []);
   }
 
   void _processIncomingRssi(int newRssi) {

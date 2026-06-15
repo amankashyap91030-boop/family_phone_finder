@@ -15,13 +15,12 @@ jobs:
         with:
           channel: 'stable'
           
-      # Purana structure poora saaf karein
-      - run: rm -rf android
-      
-      # Strictly Android v2 embedding ke sath fresh structure generate karein
-      - run: flutter create . --overwrite --platform android --org com.family --project-name family_phone_finder
-      
-      # Naye Gradle standards ke mutabik clean Manifest inject karein
+      # Purana structure delete karke bilkul fresh standard project structure generate karein
+      - run: |
+          rm -rf android android/app/src/main/AndroidManifest.xml
+          flutter create . --overwrite --platforms android
+          
+      # Flutter v2 embedding aur naye gradle package architecture ke sath Manifest link karein
       - run: |
           cat << 'MANIFEST' > android/app/src/main/AndroidManifest.xml
           <manifest xmlns:android="http://schemas.android.com/apk/res/android">

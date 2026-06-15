@@ -15,14 +15,14 @@ jobs:
         with:
           channel: 'stable'
           
-      # Fresh structure generate karne ke liye automatic command
+      # Fresh Android structure generate karein
       - run: rm -rf android
       - run: flutter create . --overwrite --platform android
       
-      # Aapka custom manifest naye standard par override karne ke liye
+      # Bina package attribute wala clean Manifest generate karein (As per Gradle Recommendation)
       - run: |
           cat << 'MANIFEST' > android/app/src/main/AndroidManifest.xml
-          <manifest xmlns:android="http://schemas.android.com/apk/res/android" package="com.family.phonefinder">
+          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
               <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
               <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
               <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>

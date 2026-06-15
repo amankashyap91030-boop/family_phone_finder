@@ -14,34 +14,22 @@ jobs:
       - uses: subosito/flutter-action@v2
         with:
           channel: 'stable'
-          
-      # Purana structure delete karke bilkul fresh standard project structure generate karein
-      - run: |
-          rm -rf android android/app/src/main/AndroidManifest.xml
-          flutter create . --overwrite --platforms android
-          
-      # Flutter v2 embedding aur naye gradle package architecture ke sath Manifest link karein
-      - run: |
-          cat << 'MANIFEST' > android/app/src/main/AndroidManifest.xml
-          <manifest xmlns:android="http://schemas.android.com/apk/res/android">
-              <uses-permission android:name="android.permission.BLUETOOTH_SCAN"/>
-              <uses-permission android:name="android.permission.BLUETOOTH_CONNECT"/>
-              <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
-              <application android:label="Family Phone Finder" android:icon="@mipmap/ic_launcher">
-                  <activity android:name=".MainActivity" android:exported="true" android:launchMode="singleTop" android:theme="@style/LaunchTheme" android:configChanges="orientation|keyboardHidden|keyboard|screenSize|smallestScreenSize|screenLayout|density|uiMode" android:hardwareAccelerated="true" android:windowSoftInputMode="adjustResize">
-                      <meta-data android:name="io.flutter.embedding.android.NormalTheme" android:resource="@style/NormalTheme" />
-                      <intent-filter>
-                          <action android:name="android.intent.action.MAIN"/>
-                          <category android:name="android.intent.category.LAUNCHER"/>
-                      </intent-filter>
-                  </activity>
-              </application>
-          </manifest>
-          MANIFEST
 
+      # Step 1: Pehle purane saare kachre ko saaf karein
+      - run: |
+          rm -rf android
+          flutter clean
+          
+      # Step 2: Bilkul fresh standard Android structure generate karein
+      - run: flutter create . --platforms android
+      
+      # Step 3: Dependencies download karein
       - run: flutter pub get
+      
+      # Step 4: Final APK compile karein
       - run: flutter build apk --release
       
+      # Step 5: Generated APK ko upload karein
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:

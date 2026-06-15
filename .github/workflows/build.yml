@@ -15,21 +15,51 @@ jobs:
         with:
           channel: 'stable'
 
-      # Step 1: Pehle purane saare kachre ko saaf karein
+      # Step 1: Purane structure ko clean karein
       - run: |
           rm -rf android
           flutter clean
           
-      # Step 2: Bilkul fresh standard Android structure generate karein
+      # Step 2: Fresh standard Android project generate karein
       - run: flutter create . --platforms android
       
-      # Step 3: Dependencies download karein
+      # Step 3: Compatible flutter_blue_plus version force karein (Mismatched Arguments Fix)
+      - run: |
+          cat << 'PUBSPEC' > pubspec.yaml
+          name: family_phone_finder
+          description: Family device locator application.
+          version: 1.0.0+1
+          environment:
+            sdk: '>=3.0.0 <4.0.0'
+          dependencies:
+            flutter:
+              sdk: flutter
+            flutter_riverpod: ^2.5.1
+            hive: ^2.2.3
+            hive_flutter: ^1.1.0
+            flutter_secure_storage: ^9.0.0
+            path_provider: ^2.1.2
+            crypto: ^3.0.3
+            flutter_blue_plus: 1.20.0
+            flutter_compass: ^0.8.1
+            audioplayers: ^6.0.0
+            torch_light: ^1.0.0
+            permission_handler: ^11.3.1
+            cupertino_icons: ^1.0.6
+          dev_dependencies:
+            flutter_test:
+              sdk: flutter
+            hive_generator: ^2.0.1
+            build_runner: ^2.4.8
+          flutter:
+            uses-material-design: true
+          PUBSPEC
+
+      # Step 4: Dependencies download aur final compilation
       - run: flutter pub get
-      
-      # Step 4: Final APK compile karein
       - run: flutter build apk --release
       
-      # Step 5: Generated APK ko upload karein
+      # Step 5: Output APK ko artifact mein save karein
       - name: Upload Output
         uses: actions/upload-artifact@v4
         with:
